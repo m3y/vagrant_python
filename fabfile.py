@@ -15,6 +15,8 @@ cuisine.select_package("apt")
 def setup():
     _setup_ubuntu()
     _install_dotfiles()
+    _prepare_install_python()
+    _install_pip()
     _install_python3()
 
 
@@ -33,7 +35,15 @@ def _install_dotfiles():
     print(green("[dotfiles] installed."))
 
 
-def _install_python3():
+def _prepare_install_python():
     sudo("add-apt-repository ppa:fkrull/deadsnakes")
     sudo("apt-get update")
-    sudo("apt-get install python3.4")
+
+
+def _install_pip():
+    cuisine.package_ensure('python-pip')
+
+
+def _install_python3():
+    cuisine.package_ensure('python3.4')
+    cuisine.package_ensure('python3-pip')
